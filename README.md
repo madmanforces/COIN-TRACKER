@@ -1,1 +1,12 @@
-넬플렉스
+NellFlix
+
+### Using:
+
+- Styled Components
+- Recoil
+- React Query
+- React Router DOM
+- Apex Charts
+- React Spring
+- Typescript
+- Firebase
