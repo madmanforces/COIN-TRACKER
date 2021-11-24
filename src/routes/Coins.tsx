@@ -57,6 +57,11 @@ interface CoinInterface {
     is_active: boolean;
     type: string;
 }
+
+interface RouteState {
+    name: string;
+  }
+
 function Coins() {
     const [coins, setCoins] = useState<CoinInterface[]>([]);
     const [loading, setLoading] = useState(true);
@@ -79,12 +84,19 @@ function Coins() {
                 <CoinsList>
                     {coins.map((coin) => (
                         <Coin key={coin.id}>
-                            <Link to={`/${coin.id}`}>
+                            <Link
+                                to={{
+                                    pathname: `/${coin.id}`,
+                                    state: { name: coin.name },
+                                }}
+                            > 
+                            
+                                
                                 <Img
-                                src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                                    src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                                 />
                                 {coin.name} &rarr;
-                                </Link>
+                            </Link>
 
                         </Coin>
                     ))}
