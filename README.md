@@ -1,4 +1,4 @@
-NellFlix
+coin tracker
 
 ### Using:
 
