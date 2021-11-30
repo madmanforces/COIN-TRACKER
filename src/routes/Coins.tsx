@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from 'axios';
+import { useQuery } from "react-query";
+import { fetchCoins } from "./api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -64,7 +66,8 @@ interface RouteState {
   }
 
 function Coins() {
-    const [coins, setCoins] = useState<CoinInterface[]>([]);
+    const {isLoading, data } = useQuery<CoinInterface[]>("allcoins",fetchCoins)
+   /*  const [coins, setCoins] = useState<CoinInterface[]>([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         (async () => {
@@ -72,17 +75,17 @@ function Coins() {
             setCoins(response.data.slice(0, 100));
             setLoading(false);
         })();
-    }, []);
+    }, []); */
     return (
         <Container>
             <Header>
-                <Title>순재코인</Title>
+                <Title>SKYROKET</Title>
             </Header>
-            {loading ? (
+            {isLoading ? (
                 <Loader>순재코인떡상중</Loader>
             ) : (
                 <CoinsList>
-                    {coins.map((coin) => (
+                    {data?.slice(0, 100).map((coin) => (
                         <Coin key={coin.id}>
                             <Link
                                 to={{
