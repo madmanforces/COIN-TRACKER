@@ -35,7 +35,7 @@ const Coin = styled.li`
 `;
 const Title = styled.h1`
   font-size: 48px;
-  color: #f5f6fa;
+  color: gold;
   font-weight: 700;
 `;
 const Loader = styled.span`
