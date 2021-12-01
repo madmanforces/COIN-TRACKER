@@ -18,3 +18,11 @@ export function fetchCoins() {
       response.json()
     );
   }
+
+  export function fetchCoinHistory(coinId: string) {
+    const endDate = Math.floor(Date.now()) / 1000;
+    const startDate = endDate - 60 * 60 * 24 * 7;
+    return fetch(`${BASE}/coins/${coinId}/ohlcv/hus/historical?start=${startDate}&end=${endDate}`).then((response) => 
+      response.json()
+    );
+  }
