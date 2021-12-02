@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet";
 import { Switch, Route, useLocation, useParams,useRouteMatch, } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -9,7 +10,7 @@ import Price from "./Price";
 
 const Title = styled.h1`
 font-size: 48px;
-color: gold;
+color: ${(props) => props.theme.accentColor};
 font-weight: 700;
 `;
 
@@ -32,7 +33,7 @@ const Header = styled.header`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.25);
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -40,17 +41,19 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 33%;
   span:first-child {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 5px;
   }
+  color: ${(props) => props.theme.textColor};
 `;
 const Description = styled.p`
   margin: 20px 0px;
   font-weight: 500;
-  color: white
+  color: ${(props) => props.theme.textColor};
 `;
 const Tabs = styled.div`
   display: grid;
@@ -64,7 +67,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 15px;
   font-weight: 700;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.25);
   padding: 7px 0px;
   border-radius: 10px;
   text-decoration: none;
@@ -149,7 +152,10 @@ function Coin() {
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId)
+    () => fetchCoinTickers(coinId),
+    {
+      refetchInterval: 5000,
+    }
   );
   const loading = infoLoading || tickersLoading;
   /*  const [info, setInfo] = useState<InfoData>(); 
@@ -170,9 +176,16 @@ function Coin() {
   }, [coinId]); */
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
+        <Link to={`/`}>
             {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+            </Link>
         </Title>
       </Header>
       {loading ? (
@@ -189,8 +202,8 @@ function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
