@@ -19,10 +19,11 @@ const Header = styled.header`
 `;
 const CoinsList = styled.ul``;
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.cardBgColor};
+  color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
+  border: 1px solid white;
   a {
     padding: 20px;
     transition: color 0.2s ease-in;
@@ -65,7 +66,11 @@ interface RouteState {
   name: string;
 }
 
-function Coins() {
+interface CoinsProps {
+  toggleDark: () => void;
+}
+
+function Coins({ toggleDark }: CoinsProps) {
   const { isLoading, data } = useQuery<CoinInterface[]>("allcoins", fetchCoins)
   /*  const [coins, setCoins] = useState<CoinInterface[]>([]);
    const [loading, setLoading] = useState(true);
@@ -83,6 +88,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>SKYROKET</Title>
+        <button onClick={toggleDark}> Dark Mode</button>
       </Header>
       {isLoading ? (
         <Loader>순재코인떡상중</Loader>
