@@ -6,21 +6,22 @@ import { useQuery } from "react-query";
 import { fetchCoins } from "./api";
 
 const Wrapper = styled.div`
-  max-width: 900px;
+  max-width: 100%;
   margin: 0 auto;
 `
 
 const Container = styled.div`
   padding: 0px 20px;
   width: 460px;
-  margin-left: 45%
+  margin: 0 auto;
 `;
 
 const Aside = styled.aside`
   padding: 0px 20px;
-  max-width: 250px;
-  margin-left 12%;
-  float: left;
+  max-width: 300px;
+  margin-left 15%;
+  position: fixed
+  
 `;
 
 const Loggedinuser = styled.ul`
@@ -41,6 +42,8 @@ const Loggedin = styled.li`
   &:hover {
     a {
       color: ${(props) => props.theme.accentColor};
+      display: flex;
+      text-align: center
     }
   }
 `;
@@ -52,6 +55,7 @@ const Darkmode = styled.li`
   &:hover {
     a {
       color: ${(props) => props.theme.accentColor};
+      display: flex;
     }
   }
 `
