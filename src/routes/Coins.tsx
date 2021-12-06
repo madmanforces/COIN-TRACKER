@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
-import axios from 'axios';
+import { useSetRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import { fetchCoins } from "./api";
+import { isDarkAtom } from "../atoms";
 
 const Wrapper = styled.div`
   max-width: 100%;
@@ -21,44 +22,28 @@ const Aside = styled.aside`
   max-width: 300px;
   margin-left 15%;
   position: fixed
-  
 `;
 
 const Loggedinuser = styled.ul`
+`;
+const Loggedin = styled.li`
+background-color: ${(props) => props.theme.cardBgColor};
+color: ${(props) => props.theme.textColor};
+border-radius: 15px;
+margin-bottom: 10px;
+border: 1px solid white;
 a {
   padding: 20px;
   transition: color 0.2s ease-in;
   display: flex;
-  align-items: center;
+  justify -content: center;
 }
-border-radius: 15px;
-  margin-bottom: 10px;
-  border: 1px solid white;
-`;
-const Loggedin = styled.li`
-  color: ${(props) => props.theme.textColor};
-  border-radius: 15px;
-  margin-top: 10px;
-  &:hover {
-    a {
-      color: ${(props) => props.theme.accentColor};
-      display: flex;
-      text-align: center
-    }
+&:hover {
+  a {
+    color: ${(props) => props.theme.accentColor};
   }
+}
 `;
-
-const Darkmode = styled.li`
-  color: ${(props) => props.theme.textColor};
-  border-radius: 15px;
-  margin-bottom: 10px;
-  &:hover {
-    a {
-      color: ${(props) => props.theme.accentColor};
-      display: flex;
-    }
-  }
-`
 
 const Watchlist = styled.div`
   width: 280px;
@@ -107,6 +92,18 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
+const Button = styled.button`
+background-color: ${(props) => props.theme.cardBgColor};
+color: ${(props) => props.theme.textColor};
+border-radius: 15px;
+margin-bottom: 10px;
+border: 1px solid white;
+padding: 20px;
+transition: color 0.2s ease-in;
+display: flex;
+align-items: center;
+`;
+
 interface CoinInterface {
   id: string;
   name: string;
@@ -126,6 +123,8 @@ interface CoinsProps {
 }
 
 function Coins() {
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery<CoinInterface[]>("allcoins", fetchCoins)
   /*  const [coins, setCoins] = useState<CoinInterface[]>([]);
    const [loading, setLoading] = useState(true);
@@ -148,11 +147,7 @@ function Coins() {
           로그인
           </Link>
           </Loggedin>
-          <Darkmode>
-          <Link to={`login`}>
-          다크모드
-          </Link>
-          </Darkmode>
+          <Button onClick={toggleDarkAtom}>Dark Mode</Button>
         </Loggedinuser>
         <Watchlist>
 
