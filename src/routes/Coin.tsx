@@ -142,10 +142,10 @@ interface PriceData {
 }
 
 interface CoinProps {
-  isDark: boolean;
+ 
 }
 
-function Coin({ isDark }: CoinProps) {
+function Coin({  }: CoinProps) {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
@@ -235,7 +235,7 @@ function Coin({ isDark }: CoinProps) {
               <Price />
             </Route>
             <Route path={`/:coinId/chart`}>
-            <Chart isDark={isDark} coinId={coinId} />
+            <Chart  coinId={coinId} />
             </Route>
           </Switch>
         </>

@@ -5,10 +5,59 @@ import axios from 'axios';
 import { useQuery } from "react-query";
 import { fetchCoins } from "./api";
 
+const Wrapper = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+`
+
 const Container = styled.div`
   padding: 0px 20px;
-  max-width: 480px;
-  margin: 0 auto;
+  width: 460px;
+  margin-left: 45%
+`;
+
+const Aside = styled.aside`
+  padding: 0px 20px;
+  max-width: 250px;
+  margin-left 12%;
+  float: left;
+`;
+
+const Loggedinuser = styled.ul`
+a {
+  padding: 20px;
+  transition: color 0.2s ease-in;
+  display: flex;
+  align-items: center;
+}
+border-radius: 15px;
+  margin-bottom: 10px;
+  border: 1px solid white;
+`;
+const Loggedin = styled.li`
+  color: ${(props) => props.theme.textColor};
+  border-radius: 15px;
+  margin-top: 10px;
+  &:hover {
+    a {
+      color: ${(props) => props.theme.accentColor};
+    }
+  }
+`;
+
+const Darkmode = styled.li`
+  color: ${(props) => props.theme.textColor};
+  border-radius: 15px;
+  margin-bottom: 10px;
+  &:hover {
+    a {
+      color: ${(props) => props.theme.accentColor};
+    }
+  }
+`
+
+const Watchlist = styled.div`
+  width: 280px;
 `;
 
 const Header = styled.header`
@@ -16,6 +65,8 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  
 `;
 const CoinsList = styled.ul``;
 const Coin = styled.li`
@@ -67,10 +118,10 @@ interface RouteState {
 }
 
 interface CoinsProps {
-  toggleDark: () => void;
+
 }
 
-function Coins({ toggleDark }: CoinsProps) {
+function Coins() {
   const { isLoading, data } = useQuery<CoinInterface[]>("allcoins", fetchCoins)
   /*  const [coins, setCoins] = useState<CoinInterface[]>([]);
    const [loading, setLoading] = useState(true);
@@ -82,39 +133,54 @@ function Coins({ toggleDark }: CoinsProps) {
        })();
    }, []); */
   return (
-    <Container>
-      <Helmet>
-        <title>SKYROKET</title>
-      </Helmet>
+    <Wrapper>
       <Header>
-        <Title>SKYROKET</Title>
-        <button onClick={toggleDark}> Dark Mode</button>
-      </Header>
-      {isLoading ? (
-        <Loader>순재코인떡상중</Loader>
-      ) : (
-        <CoinsList>
-          {data?.slice(0, 100).map((coin) => (
-            <Coin key={coin.id}>
-              <Link
-                to={{
-                  pathname: `/${coin.id}`,
-                  state: { name: coin.name },
-                }}
-              >
+          <Title>SKYROKET</Title>
+        </Header>
+        <Aside>
+        <Loggedinuser>
+          <Loggedin>
+            <Link to={`login`}>
+          로그인
+          </Link>
+          </Loggedin>
+          <Darkmode>
+          <Link to={`login`}>
+          다크모드
+          </Link>
+          </Darkmode>
+        </Loggedinuser>
+        <Watchlist>
 
-
-                <Img
-                  src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
-                />
-                {coin.name} &rarr;
-              </Link>
-
-            </Coin>
-          ))}
-        </CoinsList>
-      )}
-    </Container>
+        </Watchlist>
+      </Aside>
+      <Container>
+        <Helmet>
+          <title>SKYROKET</title>
+        </Helmet>
+        {isLoading ? (
+          <Loader>순재코인떡상중</Loader>
+        ) : (
+          <CoinsList>
+            {data?.slice(0, 100).map((coin) => (
+              <Coin key={coin.id}>
+                <Link
+                  to={{
+                    pathname: `/${coin.id}`,
+                    state: { name: coin.name },
+                  }}
+                >
+                  <Img
+                    src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  />
+                  {coin.name} &rarr;
+                </Link>
+              </Coin>
+            ))}
+          </CoinsList>
+        )}
+      </Container>
+    </Wrapper>
   );
 }
 export default Coins;
