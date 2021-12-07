@@ -19,7 +19,7 @@ const Loader = styled.span`
   display: block;
 `;
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 10px 20px;
   max-width: 480px;
   margin: 0 auto;
 `;
@@ -34,8 +34,9 @@ const Overview = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: rgba(0, 0, 0, 0.25);
-  padding: 10px 20px;
+  padding: 15px 20px;
   border-radius: 10px;
+  margin-bottom:
 `;
 const OverviewItem = styled.div`
   display: flex;
@@ -51,7 +52,7 @@ const OverviewItem = styled.div`
   color: ${(props) => props.theme.textColor};
 `;
 const Description = styled.p`
-  margin: 20px 0px;
+  margin: 20px 20px;
   font-weight: 500;
   color: ${(props) => props.theme.textColor};
 `;
