@@ -5,6 +5,7 @@ import { useSetRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import { fetchCoins } from "./api";
 import { isDarkAtom } from "../atoms";
+import Login from "./Login";
 
 const Wrapper = styled.div`
   max-width: 100%;
@@ -118,14 +119,13 @@ interface RouteState {
   name: string;
 }
 
-interface CoinsProps {
 
-}
 
-function Coins() {
+function Home() {
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery<CoinInterface[]>("allcoins", fetchCoins)
+  const {} = useQuery<[]>("", )
   /*  const [coins, setCoins] = useState<CoinInterface[]>([]);
    const [loading, setLoading] = useState(true);
    useEffect(() => {
@@ -138,21 +138,22 @@ function Coins() {
   return (
     <Wrapper>
       <Header>
-          <Title>SKYROKET</Title>
-        </Header>
-        <Aside>
-        <Loggedinuser>
-          <Loggedin>
-            <Link to={`login`}>
-          로그인
-          </Link>
+        <Title>SKYROKET</Title>
+      </Header>
+
+      <Aside>
+        <Loggedinuser >
+          <Loggedin >
+            <Link to= {`./Login`}>
+              로그인
+            </Link>
           </Loggedin>
           <Button onClick={toggleDarkAtom}>Dark Mode</Button>
         </Loggedinuser>
         <Watchlist>
-
         </Watchlist>
       </Aside>
+
       <Container>
         <Helmet>
           <title>SKYROKET</title>
@@ -180,6 +181,8 @@ function Coins() {
         )}
       </Container>
     </Wrapper>
+
+
   );
 }
-export default Coins;
+export default Home;
