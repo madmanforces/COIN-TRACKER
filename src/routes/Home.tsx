@@ -7,6 +7,7 @@ import { fetchCoins } from "./api";
 import { isDarkAtom } from "../atoms";
 import Login from "./Login";
 
+
 const Wrapper = styled.div`
   max-width: 100%;
   margin: 0 auto;
@@ -144,7 +145,7 @@ function Home() {
       <Aside>
         <Loggedinuser >
           <Loggedin >
-            <Link to= {`./Login`}>
+            <Link to= {`/Login`}>
               로그인
             </Link>
           </Loggedin>
@@ -159,7 +160,7 @@ function Home() {
           <title>SKYROKET</title>
         </Helmet>
         {isLoading ? (
-          <Loader>순재코인떡상중</Loader>
+          <Loader>코인떡상중</Loader>
         ) : (
           <CoinsList>
             {data?.slice(0, 100).map((coin) => (

@@ -36,7 +36,7 @@ const Overview = styled.div`
   background-color: rgba(0, 0, 0, 0.25);
   padding: 15px 20px;
   border-radius: 10px;
-  margin-bottom:
+  margin: 30px auto
 `;
 const OverviewItem = styled.div`
   display: flex;
@@ -52,15 +52,15 @@ const OverviewItem = styled.div`
   color: ${(props) => props.theme.textColor};
 `;
 const Description = styled.p`
-  margin: 20px 20px;
+  margin: 35px 20px;
   font-weight: 500;
   color: ${(props) => props.theme.textColor};
 `;
 const Tabs = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin: 25px 0px;
-  gap: 10px;
+  margin: 50px 0px;
+  gap: 20px;
 `;
 
 const Tab = styled.span<{ isActive: boolean }>`
@@ -227,13 +227,13 @@ function Coin({  }: CoinProps) {
               <Link to={`/${coinId}/chart`}>Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to={`/${coinId}/price`}>Graph</Link>
             </Tab>
           </Tabs>
 
           <Switch>
             <Route path={`/:coinId/price`}>
-              <Price />
+              <Price coinId={coinId}/>
             </Route>
             <Route path={`/:coinId/chart`}>
             <Chart  coinId={coinId} />
