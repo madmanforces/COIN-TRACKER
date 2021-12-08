@@ -23,7 +23,7 @@ interface PriceProps {
 
   function Price({ coinId }: PriceProps) {
   const isDark = useRecoilValue(isDarkAtom);
-  const { isLoading, data } = useQuery<Historical[]>(["ohlcv", coinId], () =>
+  const { isLoading, data } = useQuery<Historical[]>(["allcoins", coinId], () =>
     fetchCoinHistory(coinId));
     return (
       <div>
