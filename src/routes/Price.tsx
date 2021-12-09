@@ -1,10 +1,12 @@
 import { useQuery } from "react-query";
-import { fetchCoinHistory } from "./api";
+import { fetchCoinToday } from "./api";
 import ApexChart from "react-apexcharts";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom } from "../atoms";
 
-interface Historical {
+
+
+interface Today {
   time_open: string;
   time_close: string;
   open: number;
@@ -15,64 +17,64 @@ interface Historical {
   market_cap: number;
 }
 
-interface PriceProps {
+interface TodayProps {
   coinId: string;
   
 }
 
 
-  function Price({ coinId }: PriceProps) {
+  function Today({ coinId }: TodayProps) {
   const isDark = useRecoilValue(isDarkAtom);
-  const { isLoading, data } = useQuery<Historical[]>(["allcoins", coinId], () =>
-    fetchCoinHistory(coinId));
+  const { isLoading, data } = useQuery<Today[]>(["ohlcv", coinId], () =>
+    fetchCoinToday(coinId));
     return (
       <div>
         {isLoading ? (
           "Loading chart..."
         ) : (
           <ApexChart
-            type="line"
-            series={[
-              {
-                name: "Price",
-                data: data?.map((price) => price.close),
+          type="line"
+          series={[
+            {
+              name: "price",
+              data: data?.map((price) => price.close),
+            },
+          ]}
+          options={{
+            theme: {
+              mode: isDark ? "dark" : "light",
+            },
+            chart: {
+              id: 'realtime',
+              height: 600,
+              width: 500,
+              background: "tranparent",
+              stacked: true,
+            },
+            grid: {show: true },
+            stroke: {
+              curve: "smooth",
+              width: 4,
+            },
+            yaxis: {
+              show: false,
               },
-            ]}
-            options={{
-              theme: {
-                mode: isDark ? "dark" : "light",
+            xaxis: {
+              type: 'datetime',
+              categories: data?.map((price) => price.time_close),
+            },
+            fill : {
+              type: "gradient",
+              gradient: { gradientToColors: ["tomato"], stops: [0,100]},
+            },
+            colors: ["red"],
+            tooltip: {
+              y: {
+                formatter: (value) => `$${value.toFixed(2)}`,
               },
-              chart: {
-                height: 500,
-                width: 500,
-                background: "transparent",
-              },
-              grid: { show: false },
-              stroke: {
-                curve: "smooth",
-                width: 4,
-              },
-              yaxis: {
-                show: false,
-              },
-              xaxis: {
-                axisBorder: { show: false },
-                axisTicks: { show: false },
-                labels: { show: false },
-                type: "datetime",
-                categories: data?.map((price) => price.time_close),
-              },
-              fill: {
-                type: "gradient",
-                gradient: { gradientToColors: ["blue"], stops: [0,100] },
-              },
-              colors: ["red"],
-              tooltip: {
-                y: {
-                  formatter: (value) => `$${value.toFixed(2)}`,
-                },
-              },
-            }}
+            }
+          }}
+          
           />
         )}
       </div>
@@ -81,7 +83,7 @@ interface PriceProps {
 
   
   
-  export default Price
+  export default Today 
 
 
   

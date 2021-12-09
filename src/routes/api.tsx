@@ -1,3 +1,4 @@
+
 const BASE = `https://api.coinpaprika.com/v1`;
 
 
@@ -27,10 +28,11 @@ export function fetchCoins() {
     ).then((response) => response.json());
   }
 
-  export function fetchCoinPrice(coinId: string) {
-    const endDate = Math.floor(Date.now() / 1000);
-    const startDate = endDate - 60 * 60 * 24 * 7 * 2;
-    return fetch(
-      `${BASE}/coins/${coinId}/global/historical?start=${startDate}&end=${endDate}`
-    ).then((response) => response.json());
+  export function fetchCoinToday(coinId: string) {
+    return fetch(`${BASE}/coins/${coinId}/ohlcv/today`).then((response) =>
+      response.json()
+    );
   }
+
+
+
