@@ -1,12 +1,13 @@
 import { useQuery } from "react-query";
-import { fetchCoinToday } from "./api";
+import { fetchCoinHistory, fetchCoinToday } from "./api";
 import ApexChart from "react-apexcharts";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom } from "../atoms";
+import { type } from "os";
 
 
 
-interface Today {
+interface Historical {
   time_open: string;
   time_close: string;
   open: number;
@@ -25,8 +26,8 @@ interface TodayProps {
 
   function Today({ coinId }: TodayProps) {
   const isDark = useRecoilValue(isDarkAtom);
-  const { isLoading, data } = useQuery<Today[]>(["ohlcv", coinId], () =>
-    fetchCoinToday(coinId));
+  const { isLoading, data } = useQuery<Historical[]>(["ohlcv", coinId], () =>
+    fetchCoinHistory(coinId));
     return (
       <div>
         {isLoading ? (
@@ -37,8 +38,13 @@ interface TodayProps {
           series={[
             {
               name: "price",
-              data: data?.map((price) => price.close),
+              data: data?.map((price) => price.open),  
             },
+            {
+              type:"line",
+              name: "price",
+              data: data?.map((price) => price.close),
+            }
           ]}
           options={{
             theme: {
@@ -60,14 +66,18 @@ interface TodayProps {
               show: false,
               },
             xaxis: {
+              axisBorder: { show: false },
+              axisTicks: { show: false },
+              labels: { show: false },
               type: 'datetime',
-              categories: data?.map((price) => price.time_close),
+              categories: data?.map((price) =>price.time_close),
+              
             },
             fill : {
               type: "gradient",
-              gradient: { gradientToColors: ["tomato"], stops: [0,100]},
+              gradient: { gradientToColors: ["yellow"], stops: [0,100]},
             },
-            colors: ["red"],
+            colors: ["green"],
             tooltip: {
               y: {
                 formatter: (value) => `$${value.toFixed(2)}`,
