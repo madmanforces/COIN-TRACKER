@@ -20,3 +20,9 @@ node_modules
 .cache
 .eslintcache
 package-lock.json
+/node_modules
+.env
+/uploads 
+.DS_Store 
+/assets
+/build
