@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { fetchCoinHistory, fetchCoinToday } from "./api";
+import { fetchCoinHistory, fetchCoinToday } from "../api/api";
 import ApexChart from "react-apexcharts";
 import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "../atoms";
+import { isDarkAtom } from "../../atoms";
 import { type } from "os";
 
 

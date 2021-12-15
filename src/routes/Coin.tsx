@@ -4,9 +4,9 @@ import { Helmet } from "react-helmet";
 import { Switch, Route, useLocation, useParams,useRouteMatch, } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { fetchCoinInfo, fetchCoinTickers } from "./api";
-import Chart from "./Chart";
-import Price from "./Price";
+import { fetchCoinInfo, fetchCoinTickers } from "./api/api";
+import Chart from "./Coin pages/Chart";
+import Price from "./Coin pages/Price";
 
 const Title = styled.h1`
 font-size: 48px;

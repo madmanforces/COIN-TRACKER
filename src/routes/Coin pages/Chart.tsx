@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { fetchCoinHistory } from "./api";
+import { fetchCoinHistory } from "../api/api";
 import ApexChart from "react-apexcharts";
 import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "../atoms";
+import { isDarkAtom } from "../../atoms";
 
 interface Historical {
   time_open: string;

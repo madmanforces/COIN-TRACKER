@@ -1,7 +1,8 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Coin from "./routes/Coin";
 import Home from "./routes/Home";
-import Login from "./routes/Login";
+import Login from "./routes/Login/Login";
+import SignUp from "./routes/SignUp/SignUp";
 
 interface RouterProps {}
 
@@ -12,6 +13,7 @@ function Router({}: RouterProps) {
       <Route path="/Login" component={Login}>
         <Login  />
         </Route>
+        <Route path="/signup" component={SignUp} />
         <Route path="/:coinId">
         <Coin  />
         </Route>

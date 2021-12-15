@@ -3,9 +3,9 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { useQuery } from "react-query";
-import { fetchCoins } from "./api";
+import { fetchCoins } from "./api/api";
 import { isDarkAtom } from "../atoms";
-import Login from "./Login";
+import LogIn from "./Login/Login";
 
 
 const Wrapper = styled.div`
