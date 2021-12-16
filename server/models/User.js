@@ -51,7 +51,7 @@ userSchema.methods.comparePassword = function(plainPassword, cb) {
     // ex) plainPassword : 124214 암호화된 비빌번호 : asgbhjlaskaslgaksghlaksj923asfas2
     bcrypt.compare(plainPassword, this.password, function(err, isMatch){
         if(err)
-        return cb(err),
+        return cb(err);
         cb(null, isMatch)
     })
 }
@@ -61,7 +61,7 @@ userSchema.methods.generateToken = function(cb) {
 
     // jsonwebtoken을 이용해서 토큰 생성
 
-    var token = jwt.sign(user._id, 'secretToken')
+    var token = jwt.sign(user._id.toHexString(), 'secretToken')
 
     //user._id + 'secretToken' = token
 

@@ -2,14 +2,15 @@ const express = require('express');
 const app = express();
 const PORT = 3002;
 const {User} = require("./models/User");
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const config = require('./config/key')
 
 //APPICATION
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 const mongoose = require('mongoose');
@@ -48,7 +49,9 @@ app.post('/login', (req,res) => {
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
         //토큰을 생성한다 어디에? -> 쿠키,로컬스토리지
-        
+      res.cookie("x_auth",user.token)
+      .status(200)
+      .json({ loginSuccess: true, userId: user._id})
       })
     })
   })
