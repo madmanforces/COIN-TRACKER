@@ -1,6 +1,7 @@
 const monoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
+const jwt = require('jsonwebtoken')
 
 
 const userSchema = monoose.Schema({
@@ -41,8 +42,35 @@ userSchema.pre('save', function (next) {
             next()
         })
     })
+    } else {
+        next()
     }
 })
+
+userSchema.methods.comparePassword = function(plainPassword, cb) {
+    // ex) plainPassword : 124214 암호화된 비빌번호 : asgbhjlaskaslgaksghlaksj923asfas2
+    bcrypt.compare(plainPassword, this.password, function(err, isMatch){
+        if(err)
+        return cb(err),
+        cb(null, isMatch)
+    })
+}
+userSchema.methods.generateToken = function(cb) {
+
+    var user = this;
+
+    // jsonwebtoken을 이용해서 토큰 생성
+
+    var token = jwt.sign(user._id, 'secretToken')
+
+    //user._id + 'secretToken' = token
+
+    user.token = token
+    user.save(function(err, user){
+        if(err) return cb(err)
+        cb(null, user)
+    })
+}
 
 const User = monoose.model('User', userSchema)
 
