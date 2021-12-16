@@ -1,10 +1,6 @@
 const monoose = require('mongoose')
 
 const userSchema = monoose.Schema({
-    name: {
-        type: String,
-        maxlength: 50,
-    },
     email: {
         type: String,
         trim: true,
@@ -30,4 +26,4 @@ const userSchema = monoose.Schema({
 
 const User = monoose.model('User',userSchema)
 
-export default User;
+module.exports ={ User}
