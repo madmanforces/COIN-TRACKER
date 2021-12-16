@@ -6,59 +6,59 @@ import useSWR from 'swr';
 import fetcher from "../../utils/fetcher";
 import useInput from "../../hooks/useInput";
 
-const SignUp = () => {
-  const { data, error } = useSWR('/api/users', fetcher);
 
-  const [email, onChangeEmail] = useInput('');
-  const [nickname, onChangeNickname] = useInput('');
-  const [password, , setPassword] = useInput('');
-  const [passwordCheck, , setPasswordCheck] = useInput('');
-  const [mismatchError, setMismatchError] = useState(false);
-  const [signUpError, setSignUpError] = useState('');
-  const [signUpSuccess, setSignUpSuccess] = useState(false);
-
-  const onChangePassword = useCallback(
-    (e) => {
-      setPassword(e.target.value);
-      setMismatchError(e.target.value !== passwordCheck);
-    },
-    [passwordCheck],
+  const SignUp = () => {
+    const { data: userData } = useSWR('http://localhost3001/api/users', fetcher);
+    const [signUpError, setSignUpError] = useState(false);
+    const [signUpSuccess, setSignUpSuccess] = useState(false);
+    const [mismatchError, setMismatchError] = useState(false);
+    const [email, onChangeEmail] = useInput('');
+    const [nickname, onChangeNickname] = useInput('');
+    const [password, , setPassword] = useInput('');
+    const [passwordCheck, , setPasswordCheck] = useInput('');
+  
+    const onChangePassword = useCallback(
+      (e) => {
+        setPassword(e.target.value);
+        setMismatchError(passwordCheck !== e.target.value);
+      },
+      [passwordCheck, setPassword],
+    );
+  
+    const onChangePasswordCheck = useCallback(
+      (e) => {
+        setPasswordCheck(e.target.value);
+        setMismatchError(password !== e.target.value);
+      },
+      [password, setPasswordCheck],
+    );
+  
+    const onSubmit = useCallback(
+      (e) => {
+        e.preventDefault();
+        if (!nickname || !nickname.trim()) {
+          return;
+        }
+        if (!mismatchError) {
+          setSignUpError(false);
+          setSignUpSuccess(false);
+          axios
+            .post('http://localhost:3001/api/users', { email, nickname, password })
+            .then(() => {
+              setSignUpSuccess(true);
+            })
+            .catch((error) => {
+              console.log(error.response?.data);
+              setSignUpError(error.response?.data?.code === 403);
+            });
+        }
+      },
+    [email, nickname, password, mismatchError],
   );
+  if (userData) {
+    return <Redirect to="/" />;
+  }
 
-  const onChangePasswordCheck = useCallback(
-    (e) => {
-      setPasswordCheck(e.target.value);
-      setMismatchError(e.target.value !== password);
-    },
-    [password],
-  );
-
-  const onSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (!mismatchError && nickname) {
-        console.log('서버로 회원가입하기');
-        setSignUpError('');
-        setSignUpSuccess(false);
-        axios
-          .post('/api/users', {
-            email,
-            nickname,
-            password,
-          })
-          .then((response) => {
-            console.log(response);
-            setSignUpSuccess(true);
-          })
-          .catch((error) => {
-            console.log(error.response);
-            setSignUpError(error.response.data);
-          })
-          .finally(() => {});
-      }
-    },
-    [email, nickname, password, passwordCheck, mismatchError],
-  );
 
 
 

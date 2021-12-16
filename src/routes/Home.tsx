@@ -24,6 +24,7 @@ const Aside = styled.aside`
   max-width: 300px;
   margin-left 15%;
   position: fixed
+  
 `;
 
 const Loggedinuser = styled.ul`
