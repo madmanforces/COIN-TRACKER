@@ -16,7 +16,7 @@ mongoose.connect('mongodb+srv://anthony:tnswo12@cluster0.gczx3.mongodb.net/myFir
 }).then(() => console.log('MongoDB Connect'))
   .catch(err => console.log('MongoDB DisConnect'));
 
-app.get('/',(req,res) => res.send('hi'));
+app.get('/',(req,res) => res.send('hi im dev'));
 
 app.post('/register', (req, res) => {
   //화원가입 필요 정보들을 client에서 가져오면 그것들을
