@@ -5,13 +5,20 @@ const {User} = require("./models/User");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
+const cors = require("cors");
 
 const config = require('./config/key')
+
+const corsOptions = {
+  origin: true,
+  credentials: true
+};
 
 //APPICATION
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors(corsOptions));
 
 
 const mongoose = require('mongoose');
