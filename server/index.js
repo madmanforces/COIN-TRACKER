@@ -4,6 +4,7 @@ const PORT = 3002;
 const {User} = require("./models/User");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const {auth} = require('./middleware/auth');
 
 const config = require('./config/key')
 
@@ -14,15 +15,16 @@ app.use(cookieParser());
 
 
 const mongoose = require('mongoose');
-const { userInfo } = require('os');
 mongoose.connect(config.mongoURL,{
     
 }).then(() => console.log('MongoDB Connect'))
   .catch(err => console.log('MongoDB DisConnect'));
 
-app.get('/',(req,res) => res.send('hi im '));
+app.get('/', ( req, res ) => res.send('hi im '));
 
-app.post('/register', (req, res) => {
+app.get('/api/hello', (req, res) => res.send('Hello World!~~ '))
+
+app.post('/api/users/register', (req, res) => {
   //화원가입 필요 정보들을 client에서 가져오면 그것들을
   //DB에 넣어준다
   const user = new User(req.body)
@@ -34,7 +36,7 @@ app.post('/register', (req, res) => {
   })
 });
 
-app.post('/login', (req,res) => {
+app.post('/api/users/login', (req,res) => {
   User.findOne({email: req.body.email},(err, user) => {
     if(!user) {
       return res.json({
@@ -56,6 +58,32 @@ app.post('/login', (req,res) => {
     })
   })
 });
+
+app.get('/api/users/auth', auth ,(req, res) => {
+
+//여기까지 미들웨어가 잘 진행되어 통과했다면 auth가 true 라는 말
+res.status(200).json({
+  _id: req.user._id,
+  isAdmin: req.user.role === 0 ? false : true,
+  isAuth: true,
+  email: req.user.email,
+  nickname: req.user.name,
+  role: req.user.role,
+  image: req.user.image
+})
+})
+
+app.get('/api/users/logout', auth, (req, res) => {
+  User.findOneAndUpdate({_id: req.user._id},
+    {token: ""}
+    , (err, user) => {
+      if(err) return res.json({success: false, err})
+      return res.staus(200).send({
+        success: true
+      })
+    })
+
+})
 
 
 
