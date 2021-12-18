@@ -4,21 +4,21 @@ import Home from "./routes/Home";
 import Login from "./routes/Login/Login";
 import SignUp from "./routes/SignUp/SignUp";
 
-interface RouterProps {}
 
-function Router({}: RouterProps) {
+
+function Router() {
   return (
     <BrowserRouter>
       <Switch>
-      <Route path="/Login" component={Login}>
-        <Login  />
+      <Route path="/Home" component={Home}>
+        <Home  />
         </Route>
         <Route path="/signup" component={SignUp} />
         <Route path="/:coinId">
         <Coin  />
         </Route>
-        <Route path="/" >
-        <Home  />
+        <Route path="/" component={Login} >
+        <Login  />
         </Route>
       </Switch>
     </BrowserRouter>

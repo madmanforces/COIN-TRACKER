@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, withRouter, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
@@ -8,7 +8,7 @@ import { isDarkAtom } from "../atoms";
 import LogIn from "./Login/Login";
 import axios from 'axios';
 import React, { useCallback, useEffect } from 'react'
-import { Session } from "inspector";
+
 
 
 const Wrapper = styled.div`
@@ -110,7 +110,7 @@ display: flex;
 align-items: center;
 `;
 
-interface CoinInterface {
+ interface CoinInterface {
   id: string;
   name: string;
   symbol: string;
@@ -120,12 +120,8 @@ interface CoinInterface {
   type: string;
 }
 
-interface RouteState {
-  name: string;
-}
-interface Props {
-  type: any;
-}
+
+
 
 
 function Home() {
@@ -142,16 +138,23 @@ function Home() {
            setLoading(false);
        })();
    }, []); */
-   const onClickHandler = () => {
-    axios.get(`/api/users/logout`)
-        .then(response => {
-            if (response.data.success) {
-                props.history.push("/login")
-            } else {
-                alert('로그아웃 하는데 실패 했습니다.')
-            }
-        })
+   
+
+   useEffect(() => {
+    axios.get('http://localhost:3002/api/hello')
+        .then(response => { console.log(response) })
+}, [])
+function onClickHandler() {
+  axios.get('http://localhost:3002/api/users/logout')
+      .then(response => {
+          if (response.data.success) {
+                window.location.href = "/Login"
+          } else {
+              alert('로그아웃 하는데 실패 했습니다.')
+          }
+      })
 }
+
    
    
   return (
@@ -162,9 +165,9 @@ function Home() {
 
       <Aside>
         <Loggedinuser >
-          <Loggedin >
-            <Link to= {`/Login`}>
-              로그인
+          <Loggedin>
+            <Link to= {`/Login`} onClick={onClickHandler}>
+              로그아웃
             </Link>
           </Loggedin>
           <Button onClick={toggleDarkAtom}>Dark Mode</Button>
@@ -204,4 +207,4 @@ function Home() {
 
   );
 }
-export default Home;
+export default withRouter(Home)

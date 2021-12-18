@@ -188,7 +188,7 @@ function Coin({  }: CoinProps) {
       </Helmet>
       <Header>
         <Title>
-        <Link to={`/`}>
+        <Link to={`/Home`}>
             {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
             </Link>
         </Title>

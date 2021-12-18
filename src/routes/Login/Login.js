@@ -49,7 +49,7 @@ console.log(props)
       axios.post('http://localhost:3002/api/users/login',body)
             .then(response => {
                 if (response) {
-                    props.history.push('/')
+                    props.history.push('/Home')
                 } else {
                     alert('Error˝')
                 }
