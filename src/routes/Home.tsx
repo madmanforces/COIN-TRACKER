@@ -1,7 +1,7 @@
-import { Link, withRouter, useHistory } from "react-router-dom";
+import { Link, Redirect, withRouter, } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
-import { useSetRecoilState } from "recoil";
+import { RecoilValueReadOnly, useSetRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import { fetchCoins } from "./api/api";
 import { isDarkAtom } from "../atoms";
@@ -124,7 +124,7 @@ align-items: center;
 
 
 
-function Home() {
+function Home(prpps: any) {
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery<CoinInterface[]>("allcoins", fetchCoins)
@@ -141,19 +141,10 @@ function Home() {
    
 
    useEffect(() => {
-    axios.get('http://localhost:3002/api/hello')
+    axios.get('/api/hello')
         .then(response => { console.log(response) })
 }, [])
-function onClickHandler() {
-  axios.get('http://localhost:3002/api/users/logout')
-      .then(response => {
-          if (response.data.success) {
-                window.location.href = "/Login"
-          } else {
-              alert('로그아웃 하는데 실패 했습니다.')
-          }
-      })
-}
+
 
    
    
@@ -166,7 +157,7 @@ function onClickHandler() {
       <Aside>
         <Loggedinuser >
           <Loggedin>
-            <Link to= {`/Login`} onClick={onClickHandler}>
+            <Link to= {`/`}>
               로그아웃
             </Link>
           </Loggedin>
