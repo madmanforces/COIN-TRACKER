@@ -1,13 +1,13 @@
 import { Link, Redirect, withRouter, } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
-import { RecoilValueReadOnly, useSetRecoilState } from "recoil";
+import {  useSetRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import { fetchCoins } from "./api/api";
 import { isDarkAtom } from "../atoms";
-import LogIn from "./Login/Login";
 import axios from 'axios';
-import React, { useCallback, useEffect } from 'react'
+import { useEffect } from "react";
+
 
 
 
