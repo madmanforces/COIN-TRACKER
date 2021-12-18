@@ -6,6 +6,9 @@ import { useQuery } from "react-query";
 import { fetchCoins } from "./api/api";
 import { isDarkAtom } from "../atoms";
 import LogIn from "./Login/Login";
+import axios from 'axios';
+import React, { useCallback, useEffect } from 'react'
+import { Session } from "inspector";
 
 
 const Wrapper = styled.div`
@@ -120,7 +123,9 @@ interface CoinInterface {
 interface RouteState {
   name: string;
 }
-
+interface Props {
+  type: any;
+}
 
 
 function Home() {
@@ -137,6 +142,18 @@ function Home() {
            setLoading(false);
        })();
    }, []); */
+   const onClickHandler = () => {
+    axios.get(`/api/users/logout`)
+        .then(response => {
+            if (response.data.success) {
+                props.history.push("/login")
+            } else {
+                alert('로그아웃 하는데 실패 했습니다.')
+            }
+        })
+}
+   
+   
   return (
     <Wrapper>
       <Header>

@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import {Header,Title,Form,Input,Button,LinkContainer,Error,Success,Label} from "./style"
 import axios from "axios";
 import { registerUser } from '../_actions/user_action';
+import { withRouter } from 'react-router-dom';
 
 
 
@@ -46,7 +47,7 @@ function SignUp(props) {
         }
         axios.post('http://localhost:3002/api/users/register',body)
         .then(response => {
-            if (response.payload.loginSuccess) {
+            if (response) {
                 props.history.push('/')
             } else {
                 alert('Error˝')
@@ -97,4 +98,4 @@ function SignUp(props) {
   );
 };
 
-export default SignUp ;
+export default withRouter(SignUp)

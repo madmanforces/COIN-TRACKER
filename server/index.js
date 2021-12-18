@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
 const cors = require("cors");
+const session = require('express-session')
+const MongoStore = require('connect-mongo');
+const localsMiddleware = require('./middleware/middlewares')
 
 const config = require('./config/key')
 
@@ -19,6 +22,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.use(session({
+
+  secret:'skyrocket',
+  resave:false,
+  saveUninitialized:false,
+  store: MongoStore.create({mongoUrl:config.mongoURL}),
+  cookie:{maxAge:(3.6e+6)*24} // 24시간 유효
+}))
+app.use(localsMiddleware);
 
 
 const mongoose = require('mongoose');
@@ -44,7 +56,7 @@ app.post('/api/users/register', (req, res) => {
 });
 
 app.post('/api/users/login', (req,res) => {
-  User.findOne({email: req.body.email},(err, user) => {
+  const user = User.findOne ({email: req.body.email},(err, user) => {
     if(!user) {
       return res.json({
         loginSuccess: false,
@@ -64,6 +76,8 @@ app.post('/api/users/login', (req,res) => {
       })
     })
   })
+  req.session.loggedIn = true;
+  req.session.user = user;
 });
 
 app.get('/api/users/auth', auth ,(req, res) => {

@@ -3,6 +3,7 @@ import {  Form, Label, Input, Button, Header, Title } from '../SignUp/style'
 import { Link,} from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { withRouter } from 'react-router-dom';
 
 const LinkContainer = styled.p`
 margin:  auto ;
@@ -25,7 +26,7 @@ max-width: 400px;
 
 
 function LogIn (props) { 
-
+console.log(props)
   const [Email, setEmail] = useState("")
   const [Password, setPassword] = useState("")
 
@@ -47,7 +48,7 @@ function LogIn (props) {
 
       axios.post('http://localhost:3002/api/users/login',body)
             .then(response => {
-                if (response.payload.loginSuccess) {
+                if (response) {
                     props.history.push('/')
                 } else {
                     alert('Error˝')
@@ -82,4 +83,4 @@ function LogIn (props) {
   );
 };
 
-export default LogIn;
+export default withRouter(LogIn)

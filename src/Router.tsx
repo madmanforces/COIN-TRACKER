@@ -17,8 +17,8 @@ function Router({}: RouterProps) {
         <Route path="/:coinId">
         <Coin  />
         </Route>
-        <Route path="/">
-        <Home />
+        <Route path="/" >
+        <Home  />
         </Route>
       </Switch>
     </BrowserRouter>
