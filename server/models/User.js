@@ -19,7 +19,6 @@ const userSchema = monoose.Schema({
         maxlength: 10,
         unique: 1,
     },
-    image: String,
     token: {
         type: String
     },

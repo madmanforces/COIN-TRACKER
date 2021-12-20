@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import {  useSetRecoilState } from "recoil";
 import { useQuery } from "react-query";
-import { fetchCoins } from "./api/api";
-import { isDarkAtom } from "../atoms";
+import { fetchCoins } from "../api/api";
+import { isDarkAtom } from "../../atoms";
 import axios from 'axios';
 import { useEffect } from "react";
 
@@ -124,7 +124,7 @@ align-items: center;
 
 
 
-function Home(prpps: any) {
+function Home(props: any){
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery<CoinInterface[]>("allcoins", fetchCoins)
@@ -141,13 +141,21 @@ function Home(prpps: any) {
    
 
    useEffect(() => {
-    axios.get('/api/hello')
+    axios.get('http://localhost:3002/api/whello')
         .then(response => { console.log(response) })
 }, [])
 
+  const onClickHandler = () => {
+  axios.get('http://localhost:3002/api/users/logout')
+      .then(response => {
+        console.log(response.data)
+          if (response.data.success) {
+              props.history.push("/login")
+          }
+      })
+}
 
-   
-   
+
   return (
     <Wrapper>
       <Header>
@@ -156,11 +164,11 @@ function Home(prpps: any) {
 
       <Aside>
         <Loggedinuser >
-          <Loggedin>
-            <Link to= {`/`}>
+            <Button onClick={onClickHandler}>
+              <Link to={"/"}>
               로그아웃
-            </Link>
-          </Loggedin>
+              </Link>
+            </Button>
           <Button onClick={toggleDarkAtom}>Dark Mode</Button>
         </Loggedinuser>
         <Watchlist>

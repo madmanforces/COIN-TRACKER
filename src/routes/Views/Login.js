@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import {  Form, Label, Input, Button, Header, Title } from '../SignUp/style'
+import {  Form, Label, Input, Button, Header, Title } from './style'
 import { Link,} from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../_actions/user_action';
 
 const LinkContainer = styled.p`
 margin:  auto ;
@@ -22,11 +24,9 @@ max-width: 400px;
 }
 `;
 
-
-
-
 function LogIn (props) { 
-console.log(props)
+  const dispatch = useDispatch();
+
   const [Email, setEmail] = useState("")
   const [Password, setPassword] = useState("")
 
@@ -41,22 +41,22 @@ console.log(props)
   const onSubmitHandler = (event) => {
       event.preventDefault();
 
-      let body = {
+      const body = {
           email: Email,
           password: Password
       }
 
-      axios.post('http://localhost:3002/api/users/login',body)
-            .then(response => {
-                if (response) {
-                    props.history.push('/Home')
-                } else {
-                    alert('Error˝')
-                }
-            })
+      dispatch(loginUser(body))
+      .then(response => {
+          if (response.payload.loginSuccess) {
+              props.history.push('/Home')
+          } else {
+              alert('Error˝')
+          }
+      })
 
 
-  }
+}
   return (
     <div id="container">
       <Header><Title>Login</Title></Header>
@@ -73,7 +73,7 @@ console.log(props)
             <Input type="password" id="password" name="password" value={Password} onChange={onPasswordHandler} />
           </div>
         </Label>
-        <Button type="submit">로그인</Button>
+        <Button type="submit">로그인</Button> 
       </Form>
       <LinkContainer>
         아직 회원이 아니신가요?&nbsp;

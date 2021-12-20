@@ -22,15 +22,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
-app.use(session({
 
+/*app.use(session({
   secret:'skyrocket',
   resave:false,
   saveUninitialized:false,
   store: MongoStore.create({mongoUrl:config.mongoURL}),
   cookie:{maxAge:(3.6e+6)*24} // 24시간 유효
 }))
-app.use(localsMiddleware);
+app.use(localsMiddleware);*/
 
 
 const mongoose = require('mongoose');
@@ -76,8 +76,6 @@ app.post('/api/users/login', (req,res) => {
       })
     })
   })
-  req.session.loggedIn = true;
-  req.session.user = user;
 });
 
 app.get('/api/users/auth', auth ,(req, res) => {
@@ -85,12 +83,9 @@ app.get('/api/users/auth', auth ,(req, res) => {
 //여기까지 미들웨어가 잘 진행되어 통과했다면 auth가 true 라는 말
 res.status(200).json({
   _id: req.user._id,
-  isAdmin: req.user.role === 0 ? false : true,
   isAuth: true,
   email: req.user.email,
   nickname: req.user.name,
-  role: req.user.role,
-  image: req.user.image
 })
 })
 
@@ -104,7 +99,6 @@ app.get('/api/users/logout', auth, (req, res) => {
         success: true
       })
     })
-    req.session.destroy();
 });
 
 
