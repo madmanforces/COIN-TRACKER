@@ -8,18 +8,19 @@ import Auth from './routes/hoc/auth'
 
 
 
+
 function Router() {
   return (
       <BrowserRouter>
         <Switch>
-        <Route   path="/Home" component={Home}>
+        <Route   path="/Home" component={Auth(Home,false)}>
             <Home />
           </Route>
-          <Route path="/SignUp" component={SignUp} />
+          <Route path="/SignUp" component={Auth(SignUp,false)} />
           <Route  path="/:coinId">
             <Coin />
           </Route>
-          <Route  path="/" component={Login} />
+          <Route  path="/" component={Auth(Login,null)} />
         </Switch>
       </BrowserRouter>
   );

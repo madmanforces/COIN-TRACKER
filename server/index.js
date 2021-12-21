@@ -6,9 +6,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
 const cors = require("cors");
-const session = require('express-session')
-const MongoStore = require('connect-mongo');
-const localsMiddleware = require('./middleware/middlewares')
 
 const config = require('./config/key')
 
@@ -83,24 +80,26 @@ app.get('/api/users/auth', auth ,(req, res) => {
 //여기까지 미들웨어가 잘 진행되어 통과했다면 auth가 true 라는 말
 res.status(200).json({
   _id: req.user._id,
-  isAdmin: req.user.role === 0 ? false : true,
+  isAdmin: req.user.role === 1 ? false : true,
   isAuth: true,
   email: req.user.email,
-  nickname: req.user.name,
-
+  nickname: req.user.nickname,
+  role: req.user.role,
+  image: req.user.image,
 })
 })
 
-app.get('/api/users/logout', auth, (req, res) => {
-  // console.log('req.user', req.user)
+app.post('/api/users/logout', auth, (req, res) => {
+   console.log('req.user', req.user)
    User.findOneAndUpdate({ _id: req.user._id },
     { token: "" }
     , (err, user) => {
       if (err) return res.json({ success: false, err });
+      res.clearCookie("x_auth");
       return res.status(200).send({
         success: true
-      })
-    })
+      });
+    });
 });
 
 

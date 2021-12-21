@@ -145,15 +145,17 @@ function Home(props){
 }, [])
 
   const onClickHandler = () => {
-  axios.get('http://localhost:3002/api/users/logout')
-      .then(response => {
-        console.log(response.data)
-          if (response.data.success) {
-              props.history.push("/")
-          }
-      })
+  axios.post('http://localhost:3002/api/users/logout',"",{
+    withCredentials: true,
+  })
+  .then(response => {
+    if (response.data.success) {
+        props.history.push("/")
+    } else {
+        alert('로그아웃 하는데 실패 했습니다.')
+    }
+})
 }
-
 
   return (
     <Wrapper>

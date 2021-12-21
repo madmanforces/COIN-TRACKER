@@ -1,27 +1,26 @@
-const monoose = require('mongoose')
-const bcrypt = require('bcrypt')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const saltRounds = 10
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 
-const userSchema = monoose.Schema({
+const userSchema = mongoose.Schema({
+    nickname: {
+        type: String,
+        maxlength: 50
+    },
     email: {
         type: String,
         trim: true,
-        unique: 1,
+        unique: 1
     },
     password: {
         type: String,
-        minlength: 5,
-    },
-    nickname: {
-        type: String,
-        maxlength: 10,
-        unique: 1,
+        minlength: 5
     },
     role: {
         type: Number,
-        default: 0
+        default: 1
     },
     image: String,
     token: {
@@ -31,6 +30,7 @@ const userSchema = monoose.Schema({
         type: Number
     }
 })
+
 
 userSchema.pre('save', function (next) {
     var user = this;
