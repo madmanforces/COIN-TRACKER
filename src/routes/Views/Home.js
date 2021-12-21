@@ -22,39 +22,6 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const Aside = styled.aside`
-  padding: 0px 20px;
-  max-width: 300px;
-  margin-left 15%;
-  position: fixed
-  
-`;
-
-const Loggedinuser = styled.ul`
-`;
-const Loggedin = styled.li`
-background-color: ${(props) => props.theme.cardBgColor};
-color: ${(props) => props.theme.textColor};
-border-radius: 15px;
-margin-bottom: 10px;
-border: 1px solid white;
-a {
-  padding: 20px;
-  transition: color 0.2s ease-in;
-  display: flex;
-  justify -content: center;
-}
-&:hover {
-  a {
-    color: ${(props) => props.theme.accentColor};
-  }
-}
-`;
-
-const Watchlist = styled.div`
-  width: 280px;
-`;
-
 const Header = styled.header`
   height: 15vh;
   display: flex;
@@ -98,13 +65,24 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
+const LoggedButton = styled.button`
+background-color: ${(props) => props.theme.cardBgColor};
+color: ${(props) => props.theme.textColor};
+border-radius: 15px;
+
+border: 0px solid white;
+padding: 10px;
+transition: color 0.2s ease-in;
+display: flex;
+align-items: center;
+`;
+
 const Button = styled.button`
 background-color: ${(props) => props.theme.cardBgColor};
 color: ${(props) => props.theme.textColor};
 border-radius: 15px;
-margin-bottom: 10px;
-border: 1px solid white;
-padding: 20px;
+border: 0px solid white;
+padding: 10px;
 transition: color 0.2s ease-in;
 display: flex;
 align-items: center;
@@ -161,22 +139,12 @@ function Home(props){
   return (
     <Wrapper>
       <Header>
-        <Title>SKYROKET</Title>
-      </Header>
-
-      <Aside>
-        <Loggedinuser >
-            <Button onClick={onClickHandler}>
-              
+      <LoggedButton onClick={onClickHandler}>
               로그아웃
-              
-            </Button>
-          <Button onClick={toggleDarkAtom}>Dark Mode</Button>
-        </Loggedinuser>
-        <Watchlist>
-        </Watchlist>
-      </Aside>
-
+            </LoggedButton>
+        <Title>SKYROKET</Title>
+            <Button onClick={toggleDarkAtom}>Dark Mode</Button>
+      </Header>
       <Container>
         <Helmet>
           <title>SKYROKET</title>
