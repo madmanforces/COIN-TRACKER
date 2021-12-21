@@ -19,6 +19,11 @@ const userSchema = monoose.Schema({
         maxlength: 10,
         unique: 1,
     },
+    role: {
+        type: Number,
+        default: 0
+    },
+    image: String,
     token: {
         type: String
     },
@@ -45,6 +50,7 @@ userSchema.pre('save', function (next) {
     }
 })
 
+
 userSchema.methods.comparePassword = function (plainPassword, cb) {
 
     //plainPassword 1234567    암호회된 비밀번호 $2b$10$l492vQ0M4s9YUBfwYkkaZOgWHExahjWC
@@ -53,6 +59,7 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
         cb(null, isMatch);
     })
 }
+
 userSchema.methods.generateToken = function (cb) {
     var user = this;
     // console.log('user._id', user._id)
@@ -69,6 +76,7 @@ userSchema.methods.generateToken = function (cb) {
         cb(null, user)
     })
 }
+
 userSchema.statics.findByToken = function(token, cb) {
     var user = this;
     // user._id + ''  = token
@@ -83,6 +91,8 @@ userSchema.statics.findByToken = function(token, cb) {
     })
 }
 
-const User = monoose.model('User', userSchema)
+
+
+const User = mongoose.model('User', userSchema)
 
 module.exports = { User }

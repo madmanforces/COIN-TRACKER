@@ -83,9 +83,11 @@ app.get('/api/users/auth', auth ,(req, res) => {
 //여기까지 미들웨어가 잘 진행되어 통과했다면 auth가 true 라는 말
 res.status(200).json({
   _id: req.user._id,
+  isAdmin: req.user.role === 0 ? false : true,
   isAuth: true,
   email: req.user.email,
   nickname: req.user.name,
+
 })
 })
 

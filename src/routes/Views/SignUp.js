@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import {Header,Title,Form,Input,Button,LinkContainer,Error,Success,Label} from "./style"
-import axios from "axios";
 import { registerUser } from '../_actions/user_action';
 import { withRouter } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
 
 
 function SignUp(props) {
     
-   
+    const dispatch = useDispatch();
 
     const [Email, setEmail] = useState("")
     const [NickName, setNickName] = useState("")
@@ -45,15 +44,16 @@ function SignUp(props) {
             password: Password,
             nickname: NickName
         }
-        axios.post('http://localhost:3002/api/users/register',body)
-        .then(response => {
-            if (response) {
-                props.history.push('/')
-            } else {
-                alert('Error˝')
-            }
-        })
+        dispatch(registerUser(body))
+            .then(response => {
+                if (response.payload.success) {
+                    props.history.push("/")
+                } else {
+                    alert("Failed to sign up")
+                }
+            })
     }
+
   return (
     <div id="container">
       <Header><Title>Sign Up</Title></Header>

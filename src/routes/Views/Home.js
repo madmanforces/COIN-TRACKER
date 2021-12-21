@@ -110,7 +110,7 @@ display: flex;
 align-items: center;
 `;
 
- interface CoinInterface {
+ /*interface CoinInterface {
   id: string;
   name: string;
   symbol: string;
@@ -118,17 +118,16 @@ align-items: center;
   is_new: boolean;
   is_active: boolean;
   type: string;
-}
+}*/
 
 
 
 
 
-function Home(props: any){
+function Home(props){
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
-  const { isLoading, data } = useQuery<CoinInterface[]>("allcoins", fetchCoins)
-  const {} = useQuery<[]>("", )
+  const { isLoading, data } = useQuery("allcoins", fetchCoins)
   /*  const [coins, setCoins] = useState<CoinInterface[]>([]);
    const [loading, setLoading] = useState(true);
    useEffect(() => {
@@ -141,7 +140,7 @@ function Home(props: any){
    
 
    useEffect(() => {
-    axios.get('http://localhost:3002/api/whello')
+    axios.get('http://localhost:3002/api/hello')
         .then(response => { console.log(response) })
 }, [])
 
@@ -150,7 +149,7 @@ function Home(props: any){
       .then(response => {
         console.log(response.data)
           if (response.data.success) {
-              props.history.push("/login")
+              props.history.push("/")
           }
       })
 }
@@ -165,9 +164,9 @@ function Home(props: any){
       <Aside>
         <Loggedinuser >
             <Button onClick={onClickHandler}>
-              <Link to={"/"}>
+              
               로그아웃
-              </Link>
+              
             </Button>
           <Button onClick={toggleDarkAtom}>Dark Mode</Button>
         </Loggedinuser>
