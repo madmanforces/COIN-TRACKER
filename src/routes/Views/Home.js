@@ -149,6 +149,7 @@ function Home(props){
     withCredentials: true,
   })
   .then(response => {
+    console.log(response)
     if (response.data.success) {
         props.history.push("/")
     } else {
