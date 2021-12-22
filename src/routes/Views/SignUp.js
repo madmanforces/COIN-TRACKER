@@ -92,7 +92,7 @@ function SignUp(props) {
       </Form>
       <LinkContainer>
         이미 회원이신가요?&nbsp;
-        <Link to="/Login">로그인 하러가기</Link>
+        <Link to="/">로그인 하러가기</Link>
       </LinkContainer>
     </div>
   );

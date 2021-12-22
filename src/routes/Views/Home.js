@@ -128,9 +128,7 @@ function Home(props){
     console.log(response)
  if (response.data.success) {
         props.history.push("/")
-    } else {
-        alert('로그아웃 하는데 실패 했습니다.')
-    }
+    } 
 })
 }
 
@@ -138,13 +136,14 @@ function Home(props){
     <Wrapper>
       <Header>
       <LoggedButton onClick={onClickHandler}>
+        <Link to={'/'}>
               로그아웃
+              </Link>
             </LoggedButton>
         <Title>SKYROKET</Title>
             <Button onClick={toggleDarkAtom}>Dark Mode</Button>
       </Header>
       <Container>
-       
         {isLoading ? (
           <Loader>코인떡상중</Loader>
         ) : (

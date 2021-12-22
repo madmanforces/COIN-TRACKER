@@ -111,9 +111,9 @@ app.get('/api/users/logout', auth, (req, res) => {
 
   // console.log('req.user', req.user)
  
- User.findOneAndUpdate({ _id: req.user._id },
+ User.findOneAndUpdate({_id:req.user._id},
  
- { token: "" }
+ { token:" "}
  
  , (err, user) => {
  
