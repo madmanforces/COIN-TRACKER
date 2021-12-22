@@ -123,12 +123,10 @@ function Home(props){
 }, [])
 
   const onClickHandler = () => {
-  axios.post('http://localhost:3002/api/users/logout',"",{
-    withCredentials: true,
-  })
+  axios.get('http://localhost:3002/api/users/logout')
   .then(response => {
     console.log(response)
-    if (response.data.success) {
+ if (response.data.success) {
         props.history.push("/")
     } else {
         alert('로그아웃 하는데 실패 했습니다.')
@@ -146,9 +144,7 @@ function Home(props){
             <Button onClick={toggleDarkAtom}>Dark Mode</Button>
       </Header>
       <Container>
-        <Helmet>
-          <title>SKYROKET</title>
-        </Helmet>
+       
         {isLoading ? (
           <Loader>코인떡상중</Loader>
         ) : (

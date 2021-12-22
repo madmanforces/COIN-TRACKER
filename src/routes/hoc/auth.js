@@ -24,7 +24,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
                         props.history.push('/Home')
                     } else {
                         if (option === false)
-                            props.history.push('/Home')
+                            props.history.push('/')
                     }
                 }
             })

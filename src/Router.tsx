@@ -20,7 +20,7 @@ function Router() {
           <Route  path="/:coinId">
             <Coin />
           </Route>
-          <Route  path="/" component={Auth(Login,null)} />
+          <Route  path="/" component={Login} />
         </Switch>
       </BrowserRouter>
   );
