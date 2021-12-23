@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import {  useSetRecoilState } from "recoil";
 import { useQuery } from "react-query";
-import { fetchCoins } from "../api/api";
-import { isDarkAtom } from "../../atoms";
+import { fetchCoins } from "../../api/api";
+import { isDarkAtom } from "../../../atoms";
 import axios from 'axios';
 import { useEffect } from "react";
 
@@ -103,6 +103,7 @@ align-items: center;
 
 
 function Home(props){
+  console.log(props)
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery("allcoins", fetchCoins)
@@ -118,32 +119,33 @@ function Home(props){
    
 
    useEffect(() => {
-    axios.get('http://localhost:3002/api/hello')
-        .then(response => { console.log(response) })
+    axios.get('/api/hello')
+        .then(response => { console.log(response)})
 }, [])
 
-  const onClickHandler = () => {
-  axios.get('http://localhost:3002/api/users/logout')
-  .then(response => {
-    console.log(response)
- if (response.data.success) {
-        props.history.push("/")
-    } 
-})
+const onClickHandler = () => {
+  axios.get('/api/users/logout')
+      .then(response => {
+          if (response.data.success) {
+              props.history.push("/")
+          } else {
+              alert('로그아웃 하는데 실패 했습니다.')
+          }
+      })
+      
 }
 
   return (
     <Wrapper>
       <Header>
       <LoggedButton onClick={onClickHandler}>
-        <Link to={'/'}>
               로그아웃
-              </Link>
             </LoggedButton>
         <Title>SKYROKET</Title>
             <Button onClick={toggleDarkAtom}>Dark Mode</Button>
       </Header>
       <Container>
+       
         {isLoading ? (
           <Loader>코인떡상중</Loader>
         ) : (

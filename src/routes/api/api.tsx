@@ -1,5 +1,6 @@
 
 const BASE = `https://api.coinpaprika.com/v1`;
+const BASIC = `http://localhost:3002/api/users/`;
 
 
 export function fetchCoins() {
@@ -34,5 +35,8 @@ export function fetchCoins() {
     );
   }
 
-
+ export function fetchLogin() {
+  return fetch(`${BASIC}/login`).then((response) => response.json()
+  );
+ }
 

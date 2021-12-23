@@ -5,8 +5,7 @@ const {User} = require("./models/User");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
-const cors = require("cors");
-
+//const cors = require("cors");
 const config = require('./config/key')
 
 
@@ -14,11 +13,11 @@ const config = require('./config/key')
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors({
-  origin: true,
-  credential: true,
-})
-);
+//app.use(cors({
+  //origin: true,
+  //credential: true,
+//})
+//);
 
 /*app.use(session({
   secret:'skyrocket',
@@ -93,7 +92,7 @@ app.post('/api/users/login', (req, res) => {
   })
 })
 
-app.get('/api/users/auth', auth,(req, res) => {
+app.get('/api/users/auth', auth, (req, res) => {
 
 //여기까지 미들웨어가 잘 진행되어 통과했다면 auth가 true 라는 말
 res.status(200).json({
@@ -108,12 +107,8 @@ res.status(200).json({
 })
 
 app.get('/api/users/logout', auth, (req, res) => {
-
-  // console.log('req.user', req.user)
  
- User.findOneAndUpdate({_id:req.user._id},
- 
- { token:" "}
+ User.findOneAndUpdate({_id: req.user._id},{$unset:{token:1}}
  
  , (err, user) => {
  
@@ -121,11 +116,11 @@ app.get('/api/users/logout', auth, (req, res) => {
  
  return res.status(200).send({
  
- success: true
+ success: true 
  
  });
  
- });
+ }); 
  
  });
 
