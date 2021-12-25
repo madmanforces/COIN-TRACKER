@@ -13,14 +13,14 @@ function Router() {
   return (
       <BrowserRouter>
         <Switch>
-        <Route   path="/Home" component={Auth(Home,false)}>
+        <Route   path="/Home" component={Auth(Home,true)}>
             <Home />
           </Route>
-          <Route path="/SignUp" component={Auth(SignUp,false)} />
-          <Route  path="/:coinId">
+          <Route path="/SignUp" component={Auth(SignUp,false)}/>
+          <Route  path="/:coinId" component={Auth("/:coinId",true)}>
             <Coin />
           </Route>
-          <Route  path="/" component={Auth(Login,null)} />
+          <Route  path="/" component={Auth(Login,false)} />
         </Switch>
       </BrowserRouter>
   );
